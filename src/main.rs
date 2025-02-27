@@ -43,7 +43,7 @@ fn run(args: Args) -> Result<(), RustyNailerError> {
     let thumb: DynamicImage = resize_image(&img, args.size)?;
 
     // Save the thumbnail to the specified output file.
-    write_out_thumbnail(&input, thumb, &output).expect("Failed to write thumbnail");
+    write_out_thumbnail(&output, thumb, &input).expect("Failed to write thumbnail");
 
     Ok(())
 }
