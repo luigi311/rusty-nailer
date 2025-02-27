@@ -1,5 +1,5 @@
 [package]
-name = "rusty-nailer"
+name = "rusty_nailer"
 version = "0.1.0"
 edition = "2024"
 
@@ -20,3 +20,9 @@ shell-words = "1.1.0"
 [features]
 avif = ["image/avif-native"]
 
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name = "benchmark"
+harness = false
