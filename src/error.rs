@@ -1,8 +1,8 @@
 use thiserror::Error;
 
-/// A unified error type for the thumbnail library.
+/// A unified error type.
 #[derive(Error, Debug)]
-pub enum ThumbnailError {
+pub enum RustyNailerError {
     /// Wraps errors originating from the `image` crate.
     #[error("Image crate error: {0}")]
     Image(#[from] image::ImageError),
@@ -14,7 +14,4 @@ pub enum ThumbnailError {
     /// Wraps standard I/O errors.
     #[error("I/O error: {0}")]
     Io(#[from] std::io::Error),    
-
-    #[error("INI config error: {0}")]
-    Ini(#[from] ini::Error),
 }

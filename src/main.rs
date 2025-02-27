@@ -1,14 +1,17 @@
 use clap::Parser;
 use image::DynamicImage;
+use std::path::PathBuf;
 use std::process;
+use thumbnailify::file::write_out_thumbnail;
 
 mod error;
 mod file;
 mod thumbnail;
 
-use crate::error::ThumbnailError;
-use crate::thumbnail::generate_thumbnail;
-use crate::file::{parse_file, write_out_thumbnail};
+use crate::error::RustyNailerError;
+use crate::thumbnail::resize_image;
+use crate::file::parse_file;
+
 
 
 /// Thumbnail images
@@ -28,16 +31,19 @@ struct Args {
     size: u32,
 }
 
-fn run(args: Args) -> Result<(), ThumbnailError> {
+fn run(args: Args) -> Result<(), RustyNailerError> {
+    let input: PathBuf = PathBuf::from(&args.input);
+    let output: PathBuf = PathBuf::from(&args.output);
+
     // Open the input image.
     let img: DynamicImage = parse_file(&args.input)?;
 
     // Generate the thumbnail using the provided size.
     // We're calling the helper function from your library.
-    let thumb: DynamicImage = generate_thumbnail(&img, args.size)?;
+    let thumb: DynamicImage = resize_image(&img, args.size)?;
 
     // Save the thumbnail to the specified output file.
-    write_out_thumbnail(&args.output, thumb, &args.input).expect("Failed to write thumbnail");
+    write_out_thumbnail(&input, thumb, &output).expect("Failed to write thumbnail");
 
     Ok(())
 }

@@ -1,18 +1,18 @@
 use fast_image_resize::{FilterType, ResizeAlg, ResizeOptions, Resizer};
 use image::{DynamicImage, GenericImageView};
 
-use crate::error::ThumbnailError;
+use crate::error::RustyNailerError;
 
 
 /// Resizes the given image using the provided max pixel size for its smallest dimension,
 /// and returns the scaled-down image. Uses a fast filter (Triangle) for downsizing.
-pub fn generate_thumbnail(
+pub fn resize_image(
     img: &DynamicImage,
     max_dimension: u32,
-) -> Result<DynamicImage, ThumbnailError> {
+) -> Result<DynamicImage, RustyNailerError> {
     let (width, height) = img.dimensions();
     if width == 0 || height == 0 {
-        return Err(ThumbnailError::Image(image::ImageError::Parameter(
+        return Err(RustyNailerError::Image(image::ImageError::Parameter(
             image::error::ParameterError::from_kind(
                 image::error::ParameterErrorKind::Generic("Source image has no size.".into()),
             ),
